@@ -91,11 +91,11 @@ sequenceDiagram
 
 ## Design Patterns 
 
-- **Strategy**: Retry logic encapsulated (e.g., backoff types)
-- **Observer**: Job status notifications (success/failure)
-- **Command**: Jobs as commands (e.g., lambdas/functions)
+- **Strategy**: Retry logic encapsulated
+- **Observer**: Job status notifications
+- **Command**: Jobs as commands
 - **Thread Pool**: Worker management abstraction
-- **Singleton**: Shared system components (e.g., Notifier)
+- **Singleton**: Shared system components
 
 ---
 
