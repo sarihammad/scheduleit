@@ -1,6 +1,6 @@
 # ScheduleIt
 
-A highi-performance multithreaded C++ job scheduler system with retry logic, backoff strategies, and clean architecture.
+A high-performance multithreaded C++ job scheduler system with retry logic, backoff strategies, and clean architecture.
 
 ---
 
