@@ -142,5 +142,5 @@ ctest
 
 Modeled after real-world systems like:
 - AWS Step Functions
-- Celery (Python)
-- Quartz Scheduler (Java)
+- Celery
+- Quartz Scheduler
