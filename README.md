@@ -1,7 +1,8 @@
 # ScheduleIt
 
-A multithreaded C++ job scheduler system with retry logic, backoff strategies, and clean architecture.
+A high-performance multithreaded C++ job scheduler system with retry logic, backoff strategies, and clean architecture.
 
+---
 
 ## Features
 
@@ -13,20 +14,22 @@ A multithreaded C++ job scheduler system with retry logic, backoff strategies, a
 - **Extensible**: Plug-and-play components for new retry, scheduling, or notification strategies.
 - **Testable**: Designed with testability and unit testing in mind.
 
+---
 
 ## System Overview
 
-The system allows users to submit jobs, either from a CLI or programmatically. Each job includes a task (e.g., a lambda or command), metadata (e.g., retry policy), and optional delay. The scheduler places these jobs in a thread-safe priority queue, ordered by scheduled execution time.
+The system allows users to submit jobs, either from a CLI or programmatically. Each job includes a task, metadata, and optional delay. The scheduler places these jobs in a thread-safe priority queue, ordered by scheduled execution time.
 
 A thread pool picks up jobs when they're due, executes them using the configured retry strategy, and notifies observers on success or failure.
 
+---
 
 ## Architecture
 
 ```mermaid
 graph TD
 
-    Client[Job Submitter (CLI/API)] --> Scheduler[JobScheduler]
+    Client[Job Submitter CLI or API] --> Scheduler[JobScheduler]
     Scheduler --> Queue[JobQueue]
     Scheduler --> Pool[ThreadPool]
     Pool --> Executor[JobExecutor]
@@ -42,6 +45,8 @@ graph TD
     Notifier --> Notifier1
 
 ```
+
+---
 
 ## Job Lifecycle
 
@@ -75,42 +80,22 @@ sequenceDiagram
 
 ## Core Components
 
-### `Job`
-Encapsulates a unit of work with metadata:
-- ID, task (lambda), retry policy
-- Max retries, scheduled time
-
-### `RetryStrategy`
-Defines behavior for retries:
-- `FixedRetryStrategy`: retries with constant delay
-- `ExponentialBackoffStrategy`: delay increases exponentially
-
-### `Notifier`
-Subscribers that listen to job events:
-- `ConsoleNotifier`: logs status to console
-- Easily extendable to email, file, etc.
-
-### `ThreadPool`
-Manages worker threads and job distribution.
-
-### `JobQueue`
-Thread-safe priority queue sorted by next execution time.
-
-### `JobScheduler`
-Main controller that:
-- Accepts jobs
-- Manages queue and pool
-- Delegates execution and failure handling
+- Job: Encapsulates a task with metadata including an ID, executable logic, retry policy, scheduled time, and max retries.
+- RetryStrategy: Defines how and when jobs are retried, supporting both fixed delay and exponential backoff mechanisms.
+- Notifier: Observes job results and responds to events; includes a ConsoleNotifier and is extensible to other output methods.
+- ThreadPool: Oversees a pool of worker threads responsible for executing jobs concurrently.
+- JobQueue: A thread-safe, time-prioritized queue that manages when jobs should be executed.
+- JobScheduler: Central orchestrator that handles job submission, queueing, execution, retries, and observer notification.
 
 ---
 
 ## Design Patterns 
 
-- **Strategy**: Retry logic encapsulated (e.g., backoff types)
-- **Observer**: Job status notifications (success/failure)
-- **Command**: Jobs as commands (e.g., lambdas/functions)
+- **Strategy**: Retry logic encapsulated
+- **Observer**: Job status notifications
+- **Command**: Jobs as commands
 - **Thread Pool**: Worker management abstraction
-- **Singleton**: Shared system components (e.g., Notifier)
+- **Singleton**: Shared system components
 
 ---
 
@@ -157,5 +142,5 @@ ctest
 
 Modeled after real-world systems like:
 - AWS Step Functions
-- Celery (Python)
-- Quartz Scheduler (Java)
+- Celery
+- Quartz Scheduler

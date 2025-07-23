@@ -12,8 +12,12 @@ add_executable(scheduleit src/main.cpp)
 target_include_directories(scheduleit PRIVATE include)
 
 add_library(scheduleitlib STATIC ${SRC_FILES})
-target_include_directories(scheduleitlib PUBLIC include)
+target_include_directories(scheduleitlib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(scheduleit PRIVATE scheduleitlib)
+
+add_executable(benchmarks src/benchmark.cpp)
+target_link_libraries(benchmarks PRIVATE scheduleitlib)
+target_include_directories(benchmarks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 include(FetchContent)
 FetchContent_Declare(
